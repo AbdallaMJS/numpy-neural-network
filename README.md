@@ -45,9 +45,9 @@ To run this project, you only need Python and NumPy.
    ```
    The script will train the network on the XOR dataset and output its progressively decreasing loss, followed by its final predictions.
 
-## 🧠 Educational Value & MBZUAI Relevance
+## 🧠 Educational Value
 
-Understanding how neural networks operate "under the hood" is essential for advanced AI research. By manually coding backpropagation and gradient descent, this project demonstrates a concrete grasp of linear algebra, multivariate calculus, and machine learning fundamentals. It proves an ability to manipulate matrices and understand mathematical optimization, core prerequisites for the MBZUAI Undergraduate AI program.
+Understanding how neural networks operate "under the hood" is essential for advanced AI research. By manually coding backpropagation and gradient descent, this project demonstrates a concrete grasp of linear algebra, multivariate calculus, and machine learning fundamentals. It proves an ability to manipulate matrices and understand mathematical optimization.
 
 ---
 *Developed by Abdalla M.J.S. Alblooshi to showcase foundational knowledge in deep learning architecture and mathematical optimization.*

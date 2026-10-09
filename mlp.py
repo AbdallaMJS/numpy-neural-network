@@ -9,11 +9,11 @@ class NeuralNetwork:
         
         # Initialize weights and biases
         # W1: weights from input to hidden layer
-        self.W1 = np.random.randn(input_size, hidden_size) * 0.1
+        self.W1 = np.random.randn(input_size, hidden_size) * 1.0
         self.b1 = np.zeros((1, hidden_size))
         
         # W2: weights from hidden to output layer
-        self.W2 = np.random.randn(hidden_size, output_size) * 0.1
+        self.W2 = np.random.randn(hidden_size, output_size) * 1.0
         self.b2 = np.zeros((1, output_size))
         
     def sigmoid(self, x):

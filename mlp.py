@@ -1,3 +1,4 @@
+import os
 import numpy as np
 
 class NeuralNetwork:
@@ -43,7 +44,7 @@ class NeuralNetwork:
         """
         Backward propagation pass (calculates gradients and updates weights).
         """
-        m = y.shape[0] # Number of training examples
+        m = y.shape[0]  # Number of training examples
         
         # Calculate loss derivative with respect to output
         error = output - y
@@ -75,10 +76,41 @@ class NeuralNetwork:
             # Backward pass
             self.backward(X, y, output)
             
-            # Optional: Print loss every 1000 epochs to monitor training
+            # Print loss every 1000 epochs
             if (epoch % 1000) == 0:
                 loss = np.mean(np.square(y - output))
-                print(f"Epoch {epoch} | Mean Squared Error (Loss): {loss:.4f}")
+                print(
+                    f"Epoch {epoch} | "
+                    f"Mean Squared Error (Loss): {loss:.4f}"
+                )
+
+    def save_weights(self, filename="model_weights.npz"):
+        """
+        Saves the trained weights and biases to a file.
+        """
+        np.savez(
+            filename,
+            W1=self.W1,
+            b1=self.b1,
+            W2=self.W2,
+            b2=self.b2
+        )
+
+        print(f"Weights saved to {filename}")
+
+    def load_weights(self, filename="model_weights.npz"):
+        """
+        Loads previously saved weights and biases.
+        """
+        data = np.load(filename)
+
+        self.W1 = data["W1"]
+        self.b1 = data["b1"]
+        self.W2 = data["W2"]
+        self.b2 = data["b2"]
+
+        print(f"Weights loaded from {filename}")
+
 
 if __name__ == "__main__":
     # The XOR Problem Dataset
@@ -101,13 +133,34 @@ if __name__ == "__main__":
     print("Network Architecture: 2 Inputs -> 4 Hidden Neurons -> 1 Output")
     
     # 2 input features, 4 hidden nodes, 1 output node
-    nn = NeuralNetwork(input_size=2, hidden_size=4, output_size=1, learning_rate=0.5)
+    nn = NeuralNetwork(
+        input_size=2,
+        hidden_size=4,
+        output_size=1,
+        learning_rate=0.5
+    )
+
+    # Load previous training if saved weights exist
+    if os.path.exists("model_weights.npz"):
+        nn.load_weights("model_weights.npz")
+        print("Continuing training from previous weights...")
+    else:
+        print("No saved weights found. Starting a new network...")
     
     print("\nStarting Training on XOR Dataset (10,000 Epochs)...")
     nn.train(X_train, y_train, epochs=10000)
+
+    # Save the trained parameters
+    nn.save_weights("model_weights.npz")
     
     print("\nTraining Complete. Testing Predictions:")
     predictions = nn.forward(X_train)
     
     for i in range(len(X_train)):
-        print(f"Input: {X_train[i]} | Target: {y_train[i][0]} | Predicted: {predictions[i][0]:.4f} -> Rounded: {round(predictions[i][0])}")
+        print(
+            f"Input: {X_train[i]} | "
+            f"Target: {y_train[i][0]} | "
+            f"Predicted: {predictions[i][0]:.4f} -> "
+            f"Rounded: {round(predictions[i][0])}"
+        )
+        
